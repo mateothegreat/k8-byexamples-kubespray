@@ -1,6 +1,78 @@
-# My Awesome Book
+# Rollin deep with Kubespray
 
 This file file serves as your book's preface, a great place to describe your book's content and ideas.
+
+## Getting started
+
+To get started simply clone the kubespray repo then you'll need to make a couple edits and you'll be on your way!
+
+```
+git clone https://github.com/kubernetes-incubator/kubespray
+cd kubespray
+cp -R inventory/sample inventory/mycluster
+```
+
+The most important line is line #2 in the `inventory/mycluster/group_vars/all.yml`. You'll need to change the "none" value to the appropriate operating system that you're deploying to:
+
+```
+# Valid bootstrap options (required): ubuntu, coreos, centos, none
+bootstrap_os: centos
+```
+
+#### Setting up your inventory file (hosts.ini):
+
+```ini
+
+k8-master-01 ansible_host=5.0.2.104 ansible_port=22 ansible_connection=ssh ansible_user=centos
+k8-node-01 ansible_host=5.0.2.65 ansible_port=22 ansible_connection=ssh ansible_user=centos
+k8-node-02 ansible_host=5.0.2.66 ansible_port=22 ansible_connection=ssh ansible_user=centos
+
+[kube-master]
+
+k8-master-01
+
+[kube-nodes]
+
+k8-node-01
+k8-node-02
+
+[k8s-cluster:children]
+
+kube-nodes
+kube-master
+
+```
+
+##### _Test Connectivity_
+```
+$ ansible all -i hosts.ini -m ping --become
+
+k8-node-01 | SUCCESS => {
+"changed": false,
+"ping": "pong"
+}
+k8-master-01 | SUCCESS => {
+"changed": false,
+"ping": "pong"
+}
+k8-node-02 | SUCCESS => {
+"changed": false,
+"ping": "pong"
+}
+```
+Make sure you have connectivity to your machines sorted out and you're ready to roll.
+
+## Installation
+
+If all goes well, it shouldn't take but one command to fire things off. The entire provisioning process takes between 5-10 minutes generally so be patient and keep an eye on the ansible outputs.
+
+```
+$ ansible-playbook -i inventory/sample/hosts.ini cluster.yml -b -v
+```
+
+## Common Problems
+
+I've come across, and helped support, deploying to a multitude of environments finding that almost all documentation is missing these few nuggets that result in doom & gloom.
 
 #### Error from missing `python-netaddr` package
 
@@ -43,46 +115,6 @@ Swap:             0           0           0
 
 ```
 
-#### Inventory file (hosts.ini):
-```ini
-
-k8-master-01    ansible_host=5.0.2.104 ansible_port=22 ansible_connection=ssh  ansible_user=centos
-k8-node-01      ansible_host=5.0.2.65 ansible_port=22 ansible_connection=ssh  ansible_user=centos
-k8-node-02      ansible_host=5.0.2.66 ansible_port=22 ansible_connection=ssh  ansible_user=centos
-
-[kube-master]
-
-    k8-master-01
-
-[kube-nodes]
-
-    k8-node-01
-    k8-node-02
-
-[k8s-cluster:children]
-
-    kube-nodes
-    kube-master
-
-```
-
-#### Test Connectivity
-```
-$ ansible all -i hosts.ini -m ping --become
-
-k8-node-01 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-k8-master-01 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-k8-node-02 | SUCCESS => {
-    "changed": false,
-    "ping": "pong"
-}
-```
 
 #### kubectl on master
 
