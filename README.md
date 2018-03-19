@@ -43,7 +43,7 @@ kube-master
 
 ```
 
-##### _Test Connectivity_
+##### _Testing Connectivity_
 ```
 $ ansible all -i hosts.ini -m ping --become
 
@@ -116,7 +116,7 @@ Swap:             0           0           0
 ```
 
 
-#### kubectl on master
+#### Installing kubectl on master
 
 Install kubectl on the master node:
 ```
