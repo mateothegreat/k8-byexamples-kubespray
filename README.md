@@ -19,7 +19,7 @@ The most important line is line #2 in the `inventory/mycluster/group_vars/all.ym
 bootstrap_os: centos
 ```
 
-#### Setting up your inventory file (hosts.ini):
+##### Setting up your inventory file (hosts.ini):
 
 ```ini
 
