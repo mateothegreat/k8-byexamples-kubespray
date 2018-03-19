@@ -21,6 +21,28 @@ sudo apt-get install python-netaddr
 yum install python-netaddr
 ```
 
+#### Error resulting from swap being enabled
+
+```
+TASK [kubernetes/preinstall : Stop if swap enabled] *************************************************************************************************************************************************************************************************************************************************************************
+Monday 19 March 2018  02:32:51 +0000 (0:00:00.034)       0:00:11.243 **********
+
+fatal: [localhost]: FAILED! => {
+    "assertion": "ansible_swaptotal_mb == 0",
+    "changed": false,
+    "evaluated_to": false
+}
+```
+Disabling swap:
+```
+[yomateod@centos-1 kubespray]$ sudo swapoff -a
+[yomateod@centos-1 kubespray]$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:           7318        2541        3342          20        1434        4466
+Swap:             0           0           0
+
+```
+
 #### Inventory file (hosts.ini):
 ```ini
 
