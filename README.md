@@ -70,6 +70,43 @@ If all goes well, it shouldn't take but one command to fire things off. The enti
 $ ansible-playbook -i inventory/sample/hosts.ini cluster.yml -b -v
 ```
 
+##### _Installing kubectl on master_
+
+Install kubectl on the master node:
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+```
+Now query to make sure you can get to your resources:`
+```
+[centos@k8-master-01 ~]$ ./kubectl get node,pod,svc --all-namespaces -o wide
+NAME              STATUS    ROLES     AGE       VERSION           EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME
+no/k8-master-01   Ready     master    1h        v1.9.3+coreos.0   <none>        CentOS Linux 7 (Core)   3.10.0-693.21.1.el7.x86_64   docker://17.12.1-ce
+no/k8-node-01     Ready     node      1h        v1.9.3+coreos.0   <none>        CentOS Linux 7 (Core)   3.10.0-693.21.1.el7.x86_64   docker://17.12.1-ce
+no/k8-node-02     Ready     node      1h        v1.9.3+coreos.0   <none>        CentOS Linux 7 (Core)   3.10.0-693.21.1.el7.x86_64   docker://17.12.1-ce
+
+NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE       IP               NODE
+kube-system   po/calico-node-5zbkq                       1/1       Running   0          1h        5.0.2.66         k8-node-02
+kube-system   po/calico-node-mlwrr                       1/1       Running   0          1h        5.0.2.65         k8-node-01
+kube-system   po/calico-node-rm2d4                       1/1       Running   1          1h        5.0.2.104        k8-master-01
+kube-system   po/kube-apiserver-k8-master-01             1/1       Running   1          1h        5.0.2.104        k8-master-01
+kube-system   po/kube-controller-manager-k8-master-01    1/1       Running   1          1h        5.0.2.104        k8-master-01
+kube-system   po/kube-dns-79d99cdcd5-bflc7               3/3       Running   0          1h        10.233.117.130   k8-node-01
+kube-system   po/kube-dns-79d99cdcd5-td4n8               3/3       Running   0          1h        10.233.65.65     k8-node-02
+kube-system   po/kube-proxy-k8-master-01                 1/1       Running   1          1h        5.0.2.104        k8-master-01
+kube-system   po/kube-proxy-k8-node-01                   1/1       Running   0          1h        5.0.2.65         k8-node-01
+kube-system   po/kube-proxy-k8-node-02                   1/1       Running   0          1h        5.0.2.66         k8-node-02
+kube-system   po/kube-scheduler-k8-master-01             1/1       Running   1          1h        5.0.2.104        k8-master-01
+kube-system   po/kubedns-autoscaler-5564b5585f-fnv8n     1/1       Running   0          1h        10.233.117.129   k8-node-01
+kube-system   po/kubernetes-dashboard-69cb58d748-l97m6   1/1       Running   1          1h        10.233.116.194   k8-master-01
+kube-system   po/nginx-proxy-k8-node-01                  1/1       Running   0          1h        5.0.2.65         k8-node-01
+kube-system   po/nginx-proxy-k8-node-02                  1/1       Running   0          1h        5.0.2.66         k8-node-02
+
+NAMESPACE     NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)         AGE       SELECTOR
+default       svc/kubernetes             ClusterIP   10.233.0.1     <none>        443/TCP         1h        <none>
+kube-system   svc/kube-dns               ClusterIP   10.233.0.3     <none>        53/UDP,53/TCP   1h        k8s-app=kube-dns
+kube-system   svc/kubernetes-dashboard   ClusterIP   10.233.31.36   <none>        443/TCP         1h        k8s-app=kubernetes-dashboard
+```
+
 ## Common Problems
 
 I've come across, and helped support, deploying to a multitude of environments finding that almost all documentation is missing these few nuggets that result in doom & gloom.
@@ -115,10 +152,3 @@ Swap:             0           0           0
 
 ```
 
-
-#### Installing kubectl on master
-
-Install kubectl on the master node:
-```
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-```
