@@ -119,9 +119,22 @@ kube-system   svc/kube-dns               ClusterIP   10.233.0.3     <none>      
 kube-system   svc/kubernetes-dashboard   ClusterIP   10.233.31.36   <none>        443/TCP         1h        k8s-app=kubernetes-dashboard
 ```
 
-## Common Problems
+## Common Undocumented Problems
 
 I've come across, and helped support, deploying to a multitude of environments finding that almost all documentation is missing these few nuggets that result in doom & gloom.
+
+#### The error was: no test named 'equalto'
+
+```
+fatal: [rancher01]: FAILED! => {"msg": "The conditional check '{%- set certs = {'sync': False} -%}\n{% if gen_node_certs[inventory_hostname] or\n  (not etcdcert_node.results[0].stat.exists|default(False)) or\n    (not etcdcert_node.results[1].stat.exists|default(False)) or\n      (etcdcert_node.results[1].stat.checksum|default('') != etcdcert_master.files|selectattr(\"path\", \"equalto\", etcdcert_node.results[1].stat.path)|map(attribute=\"checksum\")|first|default('')) -%}\n        {%- set _ = certs.update({'sync': True}) -%}\n{% endif %}\n{{ certs.sync }}' failed. The error was: no test named 'equalto'\n\nThe error appears to have been in '/root/kubespray/roles/etcd/tasks/check_certs.yml': line 57, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n- name: \"Check_certs | Set 'sync_certs' to true\"\n  ^ here\n"}
+```
+
+##### *To resolve, upgrade Jinja2*
+
+```
+pip install --upgrade Jinja2
+```
+If `pip` is not installed, install it via `apt/yum install python-pip`.
 
 #### Error from missing `python-netaddr` package
 
@@ -135,7 +148,7 @@ efault('') }}, {%- endif -%} {%- for item in (groups['k8s-cluster'] + groups['et
 {{ hostvars[item]['ansible_hostname'] }}, {{ hostvars[item]['ansible_hostname'] }}.{{ dns_domain }}, {%-   endif -%} {{ item }},{{ item }}.{{ dns_domain }}, {%- endfor -%} 127.0.0.1,localhost: The ipaddr filter requires python-netaddr be installed on the ansible controller"}
 ```
 
-Installing:
+##### *To resolve, install the python-netaddr package:*
 
 ```
 sudo apt-get install python-netaddr
@@ -154,7 +167,7 @@ fatal: [localhost]: FAILED! => {
     "evaluated_to": false
 }
 ```
-Disabling swap:
+##### *To resolve, disable swap:*
 ```
 [yomateod@centos-1 kubespray]$ sudo swapoff -a
 [yomateod@centos-1 kubespray]$ free -m
