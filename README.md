@@ -164,3 +164,7 @@ Swap:             0           0           0
 
 ```
 You'll want to edit your `/etc/fstab` file on each node affected to make sure that the changes survive reboots.
+
+## See also
+
+* https://github.com/kubernetes-incubator/kubespray
