@@ -1,10 +1,10 @@
 # Rollin deep with Kubespray
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+To get started simply clone the kubespray repo then you'll need to make a couple edits and you'll be on your way!
 
 ## Getting started
 
-To get started simply clone the kubespray repo then you'll need to make a couple edits and you'll be on your way!
+You'll want to use a linux based host to perform your deployment from and will need ansible installed locally (`pip install ansible`).
 
 ```
 git clone https://github.com/kubernetes-incubator/kubespray
