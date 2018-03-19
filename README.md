@@ -83,6 +83,8 @@ $ ansible-playbook -i inventory/sample/hosts.ini cluster.yml -b -v
 ```
 
 ## Additional Steps & Settings
+*See [Configurable Parameters in Kubespray](https://github.com/kubernetes-incubator/kubespray/blob/master/docs/vars.md)*
+
 Now that we've deployed in a matter of minutes, here are some additional changes I highly recommend at a minimum:
 
 | File | Property | Value |
