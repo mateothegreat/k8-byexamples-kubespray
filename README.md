@@ -151,4 +151,4 @@ Mem:           7318        2541        3342          20        1434        4466
 Swap:             0           0           0
 
 ```
-
+You'll want to edit your `/etc/fstab` file on each node affected to make sure that the changes survive reboots.
