@@ -82,17 +82,17 @@ If all goes well, it shouldn't take but one command to fire things off. The enti
 $ ansible-playbook -i inventory/sample/hosts.ini cluster.yml -b -v
 ```
 
-## Recommended Settings
+## Additional Steps & Settings
 Now that we've deployed in a matter of minutes, here are some additional changes I highly recommend at a minimum:
 
-#### all.yml:
-* `kubelet_load_modules: true`
-#### k8s-cluster.yml:
-
 | File | Property | Value |
-+-----+---+----+
+|-|-|-|
+|all.yml            | kubelet_load_modules    | true         |
+|k8s-cluster.yml    | kube_version            | v1.9.4       |
+|k8s-cluster.yml    | kube_api_pwd            | something    |
+|k8s-cluster.yml    | deploy_netchecker       | true         |
 
-##### _Installing kubectl on master_
+#### _Installing kubectl on master_
 
 Install kubectl on the master node:
 ```
