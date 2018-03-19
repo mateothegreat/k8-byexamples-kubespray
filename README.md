@@ -47,3 +47,10 @@ k8-node-02 | SUCCESS => {
     "ping": "pong"
 }
 ```
+
+#### kubectl on master
+
+Install kubectl on the master node:
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+```
