@@ -34,24 +34,29 @@ bootstrap_os: centos
 ##### Setting up your inventory file (hosts.ini):
 
 ```ini
+[all]
 
-k8-master-01 ansible_host=5.0.2.104 ansible_port=22 ansible_connection=ssh ansible_user=centos
-k8-node-01 ansible_host=5.0.2.65 ansible_port=22 ansible_connection=ssh ansible_user=centos
-k8-node-02 ansible_host=5.0.2.66 ansible_port=22 ansible_connection=ssh ansible_user=centos
+  k8-master-01 ansible_host=5.0.2.104 ansible_port=22 ansible_connection=ssh ansible_user=centos
+  k8-node-01 ansible_host=5.0.2.65 ansible_port=22 ansible_connection=ssh ansible_user=centos
+  k8-node-02 ansible_host=5.0.2.66 ansible_port=22 ansible_connection=ssh ansible_user=centos
 
 [kube-master]
 
-k8-master-01
+  k8-master-01
 
 [kube-nodes]
 
-k8-node-01
-k8-node-02
+  k8-node-01
+  k8-node-02
+
+[kube-etcd]
+
+  k8-master-01
 
 [k8s-cluster:children]
 
-kube-nodes
-kube-master
+  kube-nodes
+  kube-master
 
 ```
 
