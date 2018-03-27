@@ -101,7 +101,7 @@ Now that we've deployed in a matter of minutes, here are some additional changes
 
 #### _Installing kubectl on master_
 
-Install kubectl on the master node:
+Install kubectl:
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /bin/kubectl
 ```
