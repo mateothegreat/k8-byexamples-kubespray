@@ -103,7 +103,7 @@ Now that we've deployed in a matter of minutes, here are some additional changes
 
 Install kubectl on the master node:
 ```
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /bin/kubectl
 ```
 Now query to make sure you can get to your resources:`
 ```
