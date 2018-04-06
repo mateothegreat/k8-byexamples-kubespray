@@ -49,7 +49,7 @@ bootstrap_os: centos
   k8-node-01
   k8-node-02
 
-[kube-etcd]
+[etcd]
 
   k8-master-01
 
