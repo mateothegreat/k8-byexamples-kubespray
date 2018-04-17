@@ -44,7 +44,7 @@ bootstrap_os: centos
 
   k8-master-01
 
-[kube-nodes]
+[kube-node]
 
   k8-node-01
   k8-node-02
@@ -55,7 +55,7 @@ bootstrap_os: centos
 
 [k8s-cluster:children]
 
-  kube-nodes
+  kube-node
   kube-master
 
 ```
