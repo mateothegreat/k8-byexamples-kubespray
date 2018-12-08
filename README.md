@@ -24,13 +24,6 @@ cd kubespray
 cp -R inventory/sample inventory/mycluster
 ```
 
-The most important line is line #2 in the `inventory/mycluster/group_vars/all.yml`. You'll need to change the "none" value to the appropriate operating system that you're deploying to:
-
-```
-# Valid bootstrap options (required): ubuntu, coreos, centos, none
-bootstrap_os: centos
-```
-
 ##### Setting up your inventory file (hosts.ini):
 
 ```ini
